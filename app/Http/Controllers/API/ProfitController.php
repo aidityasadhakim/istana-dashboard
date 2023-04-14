@@ -48,12 +48,12 @@ class ProfitController extends Controller
      */
     public function show($id)
     {
-        $data = Sales::where('id','=',$id)->get();
+        $data = Sales::where('id', '=', $id)->get();
 
-        if($data){
-            return ApiFormatter::createApi(200,'Success',$data);
+        if ($data) {
+            return ApiFormatter::createApi(200, 'Success', $data);
         } else {
-            return ApiFormatter::createApi(400,'Failed');
+            return ApiFormatter::createApi(400, 'Failed');
         }
     }
 
