@@ -6,15 +6,17 @@
             <div class="container-xxl flex-grow-1 container-p-y">
 
               <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-12 mb-2">
                   <div class="card">
                     <div class="card-body">
-                      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h1">Dashboard</h1>
+                      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-1 mb-1 border-bottom">
+                        <h3 class="h1">Dashboard</h3>
                         <div class="btn-toolbar mb-2 mb-md-0">
                           <div class="btn-group me-2">
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                            <a href="/?active=thismonth" type="button" class="btn btn-md {{ ($active === "thismonth") ? 'btn-primary text-white' : 'btn-outline-primary text-primary' }}" >Bulan ini</a>
+                            <a href="/?active=lastmonth" type="button" class="btn btn-md {{ ($active === "lastmonth") ? 'btn-primary text-white' : 'btn-outline-primary text-primary' }}">Bulan lalu</a>
+                            <a href="/?active=thisweek" type="button" class="btn btn-md {{ ($active === "thisweek") ? 'btn-primary text-white' : 'btn-outline-primary text-primary' }}">Minggu ini</a>
+                            <a href="/?active=today" type="button" class="btn btn-md {{ ($active === "today") ? 'btn-primary text-white' : 'btn-outline-primary text-primary' }}">Hari ini</a>
                           </div>
                           <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
                             <span data-feather="calendar" class="align-text-bottom"></span>
@@ -27,15 +29,6 @@
                 </div>
               </div>
 
-              <div class="row">
-                <div class="col-lg-4">
-                  <div class="card mb-3">
-                    <div class="card-body">
-                      <h5>Profit</h5>
-                    </div>
-                  </div>
-                </div>
-              </div>
               <div class="row">
                 <div class="col-lg-8 mb-4 order-0">
                   <div class="card">
@@ -96,7 +89,7 @@
                             </div>
                           </div>
                           <span class="fw-semibold d-block mb-1">Profit</span>
-                          <h3 class="card-title mb-2">$12,628</h3>
+                          <h4 class="card-title mb-2" id="profit"></h4>
                           <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small>
                         </div>
                       </div>
@@ -129,8 +122,8 @@
                               </div>
                             </div>
                           </div>
-                          <span>Sales</span>
-                          <h3 class="card-title text-nowrap mb-1">$4,679</h3>
+                          <span>Tunai</span>
+                          <h3 class="card-title text-nowrap mb-1" id="cash"></h3>
                           <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.42%</small>
                         </div>
                       </div>
@@ -606,5 +599,27 @@
 
     @endsection
 
+    {{-- Jquery --}}
+    <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+
+
     <!-- Page JS -->
     <script src="js/dashboards-analytics.js"></script>
+
+    {{-- Feather Icon --}}
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
+
+    <script>
+      // $(function(){
+
+      //   $.ajax({
+      //     url:'http://127.0.0.1:8000/api/profit/today',
+      //     method:'get',
+      //     dataType:'json',
+      //     success: function(data){
+      //       console.log(data.data[0]['TotalProfit']);
+      //       $('#profit').text('Rp.'+parseFloat(data.data[0]['TotalProfit']).toLocaleString('id'));
+      //     }
+      //   })
+      // })
+    </script>

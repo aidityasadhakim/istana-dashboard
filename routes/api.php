@@ -15,7 +15,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get("profit/show/{id}",[ProfitController::class,'show']);
+Route::controller(ProfitController::class)->group(function () {
+    Route::get("profit/show/{id}", 'show');
+    Route::post("profit/total", 'profitBetweenDate');
+    Route::get("profit/today", 'profitToday');
+    Route::get("profit/thismonth", 'profitThisMonth');
+    Route::get("profit/lastmonth", 'profitLastMonth');
+    Route::get("profit/thisweek", 'profitThisWeek');
+    Route::get("profit/test", 'profitTest');
+});
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
