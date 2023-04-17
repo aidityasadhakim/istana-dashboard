@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\CardController;
 use App\Http\Controllers\API\CashController;
+use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\ProfitController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +44,15 @@ Route::controller(CardController::class)->group(function () {
     Route::get("card/thisweek", "cardThisWeek");
     Route::post("card/custom", "cardBetweenDate");
     Route::get("card/test", "cardTest");
+});
+
+Route::controller(OrderController::class)->group(function () {
+    Route::get("order/today", "orderToday");
+    Route::get("order/thismonth", "orderThisMonth");
+    Route::get("order/lastmonth", "orderLastMonth");
+    Route::get("order/thisweek", "orderThisWeek");
+    Route::post("order/custom", "orderBetweenDate");
+    Route::get("order/test", "orderTest");
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
