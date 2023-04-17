@@ -2,33 +2,18 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\Sales;
-use App\Models\Stocks;
 use Illuminate\Http\Request;
 use App\Helpers\ApiFormatter;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Exception;
-use Symfony\Component\VarDumper\VarDumper;
 
-class ProfitController extends Controller
+class CashController extends Controller
 {
-    # This Profit means the total transaction not the net profit
-    # Why the variabel and class name is didn't change because I'm too lazy to refactor the code
+    // This API return all the income with no debts and paid by Cash
 
-    public function show($id)
-    {
-        $data = Sales::where('id', '=', $id)->get();
-
-        if ($data) {
-            return ApiFormatter::createApi(200, 'Success', $data);
-        } else {
-            return ApiFormatter::createApi(400, 'Failed');
-        }
-    }
-
-    public function profitBetweenDate(Request $request)
+    public function cashBetweenDate(Request $request)
     {
         $subquery = '(SELECT 
                         sale_id, SUM(buyPrice) Total
@@ -51,27 +36,41 @@ class ProfitController extends Controller
         }
     }
 
-    public function profitToday()
+    public function cashToday()
     {
-        $profit = DB::table('sales as s')
-            ->selectRaw('sum(s.total) Total, max(s.id) max, min(s.id) min')
+        // Get all the id from sales table which fulfill the requirement
+        $profit_id = DB::table('sales as s')
+            ->selectRaw("s.id")
             ->where('deleted_at', null)
+            ->where('is_cash', '!=', 0)
+            ->where('method_id', 1)
+            ->where('status', 2)
+            ->whereDate('s.transaction_date', '>=', Carbon::now()->format('Y-m-d'))
+            ->pluck('id')
+            ->toArray();
+
+        // Get the total modal for the sales which fulfill the requirement
+        $profit = DB::table('sales as s')
+            ->selectRaw('sum(s.total) as Total')
+            ->where('deleted_at', null)
+            ->where('is_cash', '!=', 0)
+            ->where('method_id', 1)
+            ->where('status', 2)
             ->whereDate('s.transaction_date', '>=', Carbon::now()->format('Y-m-d'))
             ->get();
+
         try {
             //code...
-            if (count($profit) > 0) {
+            if (count($profit_id) > 0) {
                 $modal = DB::table('stocks as st')
                     ->selectRaw('sum(st.buyPrice) TotalModal')
                     ->where('deleted_at', null)
-                    ->where('st.sale_id', '>=', $profit[0]->min)
-                    ->where('st.sale_id', '<=', $profit[0]->max)
+                    ->whereIn('st.sale_id', $profit_id)
                     ->get();
             }
             $data = array(
                 "TotalProfit" => (int)$profit[0]->Total - (int)$modal[0]->TotalModal
             );
-            // var_dump($modal[0]->TotalModal);
         } catch (Exception $e) {
             //throw $th;
             $data = array(
@@ -87,21 +86,36 @@ class ProfitController extends Controller
         }
     }
 
-    public function profitThisMonth()
+    public function cashThisMonth()
     {
-        $profit = DB::table('sales as s')
-            ->selectRaw('sum(s.total) Total, max(s.id) max, min(s.id) min')
+        // Get all the id from sales table which fulfill the requirement
+        $profit_id = DB::table('sales as s')
+            ->selectRaw("s.id")
             ->where('deleted_at', null)
+            ->where('is_cash', '!=', 0)
+            ->where('method_id', 1)
+            ->where('status', 2)
+            ->whereDate('s.transaction_date', '>=', Carbon::now()->format('Y-m') . '-01')
+            ->pluck('id')
+            ->toArray();
+
+        // Get the total modal for the sales which fulfill the requirement
+        $profit = DB::table('sales as s')
+            ->selectRaw('sum(s.total) as Total')
+            ->where('deleted_at', null)
+            ->where('is_cash', '!=', 0)
+            ->where('method_id', 1)
+            ->where('status', 2)
             ->whereDate('s.transaction_date', '>=', Carbon::now()->format('Y-m') . '-01')
             ->get();
+
         try {
             //code...
-            if (count($profit) > 0) {
+            if (count($profit_id) > 0) {
                 $modal = DB::table('stocks as st')
                     ->selectRaw('sum(st.buyPrice) TotalModal')
                     ->where('deleted_at', null)
-                    ->where('st.sale_id', '>=', $profit[0]->min)
-                    ->where('st.sale_id', '<=', $profit[0]->max)
+                    ->whereIn('st.sale_id', $profit_id)
                     ->get();
             }
             $data = array(
@@ -122,22 +136,38 @@ class ProfitController extends Controller
         }
     }
 
-    public function profitLastMonth()
+    public function cashLastMonth()
     {
+        // Get all the id from sales table which fulfill the requirement
+        $profit_id = DB::table('sales as s')
+            ->selectRaw("s.id")
+            ->where('deleted_at', null)
+            ->where('is_cash', '!=', 0)
+            ->where('method_id', 1)
+            ->where('status', 2)
+            ->whereDate('s.transaction_date', '>=', Carbon::now()->subMonth()->format('Y-m') . '-01')
+            ->whereDate('s.transaction_date', '<=', Carbon::now()->format('Y-m') . '-01')
+            ->pluck('id')
+            ->toArray();
+
+        // Get the total modal for the sales which fulfill the requirement
         $profit = DB::table('sales as s')
-            ->selectRaw('sum(s.total) Total, max(s.id) max, min(s.id) min')
-            ->where('s.deleted_at', null)
+            ->selectRaw('sum(s.total) as Total')
+            ->where('deleted_at', null)
+            ->where('is_cash', '!=', 0)
+            ->where('method_id', 1)
+            ->where('status', 2)
             ->whereDate('s.transaction_date', '>=', Carbon::now()->subMonth()->format('Y-m') . '-01')
             ->whereDate('s.transaction_date', '<=', Carbon::now()->format('Y-m') . '-01')
             ->get();
+
         try {
             //code...
-            if (count($profit) > 0) {
+            if (count($profit_id) > 0) {
                 $modal = DB::table('stocks as st')
                     ->selectRaw('sum(st.buyPrice) TotalModal')
-                    ->where('st.deleted_at', null)
-                    ->where('st.sale_id', '>=', $profit[0]->min)
-                    ->where('st.sale_id', '<=', $profit[0]->max)
+                    ->where('deleted_at', null)
+                    ->whereIn('st.sale_id', $profit_id)
                     ->get();
             }
             $data = array(
@@ -148,13 +178,6 @@ class ProfitController extends Controller
             $data = array(
                 "TotalProfit" => null
             );
-        }
-
-
-        if ($data) {
-            return ApiFormatter::createApi(200, 'Success', $data);
-        } else {
-            return ApiFormatter::createApi(200, 'Failed', $data);
         }
 
         if ($data) {
@@ -164,21 +187,36 @@ class ProfitController extends Controller
         }
     }
 
-    public function profitThisWeek()
+    public function cashThisWeek()
     {
+        // Get all the id from sales table which fulfill the requirement
+        $profit_id = DB::table('sales as s')
+            ->selectRaw("s.id")
+            ->where('deleted_at', null)
+            ->where('is_cash', '!=', 0)
+            ->where('method_id', 1)
+            ->where('status', 2)
+            ->whereDate('s.transaction_date', '>=', Carbon::now()->subDays(7))
+            ->pluck('id')
+            ->toArray();
+
+        // Get the total modal for the sales which fulfill the requirement
         $profit = DB::table('sales as s')
-            ->selectRaw('sum(s.total) Total, max(s.id) max, min(s.id) min')
-            ->where('s.deleted_at', null)
+            ->selectRaw('sum(s.total) as Total')
+            ->where('deleted_at', null)
+            ->where('is_cash', '!=', 0)
+            ->where('method_id', 1)
+            ->where('status', 2)
             ->whereDate('s.transaction_date', '>=', Carbon::now()->subDays(7))
             ->get();
+
         try {
             //code...
-            if (count($profit) > 0) {
+            if (count($profit_id) > 0) {
                 $modal = DB::table('stocks as st')
                     ->selectRaw('sum(st.buyPrice) TotalModal')
-                    ->where('st.deleted_at', null)
-                    ->where('st.sale_id', '>=', $profit[0]->min)
-                    ->where('st.sale_id', '<=', $profit[0]->max)
+                    ->where('deleted_at', null)
+                    ->whereIn('st.sale_id', $profit_id)
                     ->get();
             }
             $data = array(
@@ -199,7 +237,7 @@ class ProfitController extends Controller
         }
     }
 
-    public function profitTest()
+    public function cashTest()
     {
         $profit = DB::table('sales as s')
             ->selectRaw('sum(s.total) Total, max(s.id) max, min(s.id) min')
