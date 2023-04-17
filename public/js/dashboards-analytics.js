@@ -30,27 +30,34 @@ $(function(){
   let active = getQueryVariable('active');
 
   if (active != "custom") {
-    async function functionOne() {
+    async function totalTransactions() {
       const response = await fetch(`http://127.0.0.1:8000/api/profit/${active}`);
       const data = await response.json();
       $('#profit').text('Rp.'+parseFloat(data.data['TotalProfit']).toLocaleString('id'));
     }
     
-    async function functionTwo() {
+    async function cashTransactions() {
       const response = await fetch(`http://127.0.0.1:8000/api/cash/${active}`);
       const data = await response.json();
       $('#cash').text('Rp.'+parseFloat(data.data['TotalProfit']).toLocaleString('id'));
     }
     
-    async function functionThree() {
+    async function cardTransactions() {
       const response = await fetch(`http://127.0.0.1:8000/api/card/${active}`);
       const data = await response.json();
       $('#card').text('Rp.'+parseFloat(data.data['TotalProfit']).toLocaleString('id'));
     }
+
+    async function totalOrders() {
+      const response = await fetch(`http://127.0.0.1:8000/api/order/${active}`);
+      const data = await response.json();
+      $('#order').text(parseFloat(data.data['TotalOrder']).toLocaleString('id'));
+    }
       
-      functionOne();
-      functionTwo();
-      functionThree();
+      totalTransactions();
+      cashTransactions();
+      cardTransactions();
+      totalOrders();
   } 
 
   $('#submit').click(function(event){
@@ -70,7 +77,7 @@ $(function(){
     
     $('#customDate').addClass("bg-info");
 
-    function functionOne() {
+    function totalTransactions() {
       return $.ajax({
         url:`http://127.0.0.1:8000/api/profit/custom`,
         method:'post',
@@ -86,7 +93,7 @@ $(function(){
       })
     }
     
-    function functionTwo() {
+    function cashTransactions() {
       return $.ajax({
         url:`http://127.0.0.1:8000/api/cash/custom`,
         method:'post',
@@ -101,7 +108,7 @@ $(function(){
       }) 
     }
   
-    function functionThree() {
+    function cardTransactions() {
       return $.ajax({
         url:`http://127.0.0.1:8000/api/card/custom`,
         method:'post',
@@ -115,12 +122,28 @@ $(function(){
         }
       }) 
     }
+
+    function totalOrders() {
+      return $.ajax({
+        url:`http://127.0.0.1:8000/api/order/custom`,
+        method:'post',
+        data:{
+          start_date: $('#start_date').val(),
+          end_date: $('#end_date').val()
+        },
+        dataType:'json',
+        success: function(data){
+          $('#order').text('Rp.'+parseFloat(data.data['TotalProfit']).toLocaleString('id'));
+        }
+      }) 
+    }
     
     
     Promise.all([
-    functionOne(),
-    functionTwo(),
-    functionThree()
+    totalTransactions(),
+    cashTransactions(),
+    cardTransactions(),
+    totalOrders
   ]).then(function() {
   });
 
