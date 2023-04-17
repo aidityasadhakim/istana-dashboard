@@ -53,7 +53,7 @@ class ProfitController extends Controller
         } catch (Exception $e) {
             //throw $th;
             $data = array(
-                "TotalProfit" => null
+                "TotalProfit" => 0
             );
         }
 
@@ -89,7 +89,7 @@ class ProfitController extends Controller
         } catch (Exception $e) {
             //throw $th;
             $data = array(
-                "TotalProfit" => null
+                "TotalProfit" => 0
             );
         }
 
@@ -124,7 +124,7 @@ class ProfitController extends Controller
         } catch (Exception $e) {
             //throw $th;
             $data = array(
-                "TotalProfit" => null
+                "TotalProfit" => 0
             );
         }
 
@@ -160,7 +160,7 @@ class ProfitController extends Controller
         } catch (Exception $e) {
             //throw $th;
             $data = array(
-                "TotalProfit" => null
+                "TotalProfit" => 0
             );
         }
 
@@ -201,7 +201,7 @@ class ProfitController extends Controller
         } catch (Exception $e) {
             //throw $th;
             $data = array(
-                "TotalProfit" => null
+                "TotalProfit" => 0
             );
         }
 

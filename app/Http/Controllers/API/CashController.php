@@ -53,7 +53,7 @@ class CashController extends Controller
         } catch (Exception $e) {
             //throw $th;
             $data = array(
-                "TotalProfit" => null
+                "TotalProfit" => 0
             );
         }
         $data[] = date($request->start_date);
@@ -104,7 +104,7 @@ class CashController extends Controller
         } catch (Exception $e) {
             //throw $th;
             $data = array(
-                "TotalProfit" => null
+                "TotalProfit" => 0
             );
         }
 
@@ -154,7 +154,7 @@ class CashController extends Controller
         } catch (Exception $e) {
             //throw $th;
             $data = array(
-                "TotalProfit" => null
+                "TotalProfit" => 0
             );
         }
 
@@ -206,7 +206,7 @@ class CashController extends Controller
         } catch (Exception $e) {
             //throw $th;
             $data = array(
-                "TotalProfit" => null
+                "TotalProfit" => 0
             );
         }
 
@@ -255,7 +255,7 @@ class CashController extends Controller
         } catch (Exception $e) {
             //throw $th;
             $data = array(
-                "TotalProfit" => null
+                "TotalProfit" => 0
             );
         }
 
