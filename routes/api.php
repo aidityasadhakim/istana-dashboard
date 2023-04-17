@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(ProfitController::class)->group(function () {
     Route::get("profit/show/{id}", 'show');
-    Route::post("profit/total", 'profitBetweenDate');
+    Route::post("profit/custom", 'profitBetweenDate');
     Route::get("profit/today", 'profitToday');
     Route::get("profit/thismonth", 'profitThisMonth');
     Route::get("profit/lastmonth", 'profitLastMonth');
@@ -31,7 +31,7 @@ Route::controller(CashController::class)->group(function () {
     Route::get("cash/thismonth", "cashThisMonth");
     Route::get("cash/lastmonth", "cashLastMonth");
     Route::get("cash/thisweek", "cashThisWeek");
-    Route::get("cash/custom", "cashBetweenDate");
+    Route::post("cash/custom", "cashBetweenDate");
     Route::get("cash/test", "cashTest");
 });
 

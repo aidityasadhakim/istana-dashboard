@@ -27,66 +27,120 @@ $(function(){
 
   let active = getQueryVariable('active');
 
-  // Retrieve profit function
-  // $.ajax({
-  //   url:`http://127.0.0.1:8000/api/profit/${active}`,
-  //   method:'get',
-  //   dataType:'json',
-  //   success: function(data){
-  //     console.log("hello");
-  //     $('#profit').text('Rp.'+parseFloat(data.data['TotalProfit']).toLocaleString('id'));
-  //   }
-  // }) 
-
-  // $.ajax({
-  //   url:`http://127.0.0.1:8000/api/profit/${active}`,
-  //   method:'get',
-  //   dataType:'json',
-  //   success: function(data){
-  //     console.log("hello");
-  //     $('#cash').text('Rp.'+parseFloat(data.data['TotalProfit']).toLocaleString('id'));
-  //   }
-  // }) 
-  function functionOne() {
-    return $.ajax({
-      url:`http://127.0.0.1:8000/api/profit/${active}`,
-      method:'get',
-      dataType:'json',
-      success: function(data){
-        console.log(data);
-        $('#profit').text('Rp.'+parseFloat(data.data['TotalProfit']).toLocaleString('id'));
+  if (active != "custom") {
+      function functionOne() {
+        return $.ajax({
+          url:`http://127.0.0.1:8000/api/profit/${active}`,
+          method:'get',
+          dataType:'json',
+          success: function(data){
+            console.log(data);
+            $('#profit').text('Rp.'+parseFloat(data.data['TotalProfit']).toLocaleString('id'));
+          }
+        })
       }
-    })
-  }
-  
-  function functionTwo() {
-    return $.ajax({
-      url:`http://127.0.0.1:8000/api/cash/${active}`,
-      method:'get',
-      dataType:'json',
-      success: function(data){
-        $('#cash').text('Rp.'+parseFloat(data.data['TotalProfit']).toLocaleString('id'));
-      },
-    }) 
-  }
-
-  function functionThree() {
-    return $.ajax({
-      url:`http://127.0.0.1:8000/api/cash/${active}`,
-      method:'get',
-      dataType:'json',
-      success: function(data){
-        $('#card').text('Rp.'+parseFloat(data.data['TotalProfit']).toLocaleString('id'));
+      
+      function functionTwo() {
+        return $.ajax({
+          url:`http://127.0.0.1:8000/api/cash/${active}`,
+          method:'get',
+          dataType:'json',
+          success: function(data){
+            $('#cash').text('Rp.'+parseFloat(data.data['TotalProfit']).toLocaleString('id'));
+          },
+        }) 
       }
-    }) 
-  }
+    
+      function functionThree() {
+        return $.ajax({
+          url:`http://127.0.0.1:8000/api/cash/${active}`,
+          method:'get',
+          dataType:'json',
+          success: function(data){
+            $('#card').text('Rp.'+parseFloat(data.data['TotalProfit']).toLocaleString('id'));
+          }
+        }) 
+      }
+      
+      Promise.all([
+      functionOne(),
+      functionTwo(),
+      functionThree()
+    ]).then(function() {
+    });
+  } 
+
+  $('#submit').click(function(event){
+    $('#profit').text("Loading");
+    $('#cash').text("Loading");
+    $('#card').text("Loading");
+    
+    $("#thisMonthBtn").removeClass("btn-primary text-white");
+    $("#lastMonthBtn").removeClass("btn-primary text-white");
+    $("#thisWeekBtn").removeClass("btn-primary text-white");
+    $("#todayBtn").removeClass("btn-primary text-white");
+
+    $("#thisMonthBtn").addClass("btn-outline-primary text-primary");
+    $("#lastMonthBtn").addClass("btn-outline-primary text-primary");
+    $("#thisWeekBtn").addClass("btn-outline-primary text-primary");
+    $("#todayBtn").addClass("btn-outline-primary text-primary");
+    
+    $('#customDate').addClass("bg-info");
+
+    function functionOne() {
+      return $.ajax({
+        url:`http://127.0.0.1:8000/api/profit/custom`,
+        method:'post',
+        data:{
+          start_date: $('#start_date').val(),
+          end_date: $('#end_date').val()
+        },
+        dataType:'json',
+        success: function(data){
+          console.log(data);
+          $('#profit').text('Rp.'+parseFloat(data.data['TotalProfit']).toLocaleString('id'));
+        }
+      })
+    }
+    
+    function functionTwo() {
+      return $.ajax({
+        url:`http://127.0.0.1:8000/api/cash/custom`,
+        method:'post',
+        data:{
+          start_date: $('#start_date').val(),
+          end_date: $('#end_date').val()
+        },
+        dataType:'json',
+        success: function(data){
+          $('#cash').text('Rp.'+parseFloat(data.data['TotalProfit']).toLocaleString('id'));
+        },
+      }) 
+    }
   
-  Promise.all([
-  functionOne(),
-  functionTwo(),
-  functionThree()
-]).then(function() {
-});
+    function functionThree() {
+      return $.ajax({
+        url:`http://127.0.0.1:8000/api/cash/custom`,
+        method:'post',
+        data:{
+          start_date: $('#start_date').val(),
+          end_date: $('#end_date').val()
+        },
+        dataType:'json',
+        success: function(data){
+          $('#card').text('Rp.'+parseFloat(data.data['TotalProfit']).toLocaleString('id'));
+        }
+      }) 
+    }
+    
+    Promise.all([
+    functionOne(),
+    functionTwo(),
+    functionThree()
+  ]).then(function() {
+  });
+
+  });
   
 });
 

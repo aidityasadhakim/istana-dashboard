@@ -15,24 +15,54 @@ class CashController extends Controller
 
     public function cashBetweenDate(Request $request)
     {
-        $subquery = '(SELECT 
-                        sale_id, SUM(buyPrice) Total
-                    FROM
-                        stocks
-                    WHERE sale_id is not null
-                    GROUP BY sale_id) AS st';
+        // Get all the id from sales table which fulfill the requirement
+        $profit_id = DB::table('sales as s')
+            ->selectRaw("s.id")
+            ->where('deleted_at', null)
+            ->where('is_cash', '!=', 0)
+            ->where('method_id', 1)
+            ->where('status', 2)
+            ->whereDate('s.transaction_date', '>=', date($request->start_date))
+            ->whereDate('s.transaction_date', '<=', date($request->end_date))
+            ->pluck('id')
+            ->toArray();
 
-        $data = DB::table('sales as s')
-            ->selectRaw('SUM(s.total) - SUM(st.Total)')
-            ->join(DB::raw($subquery), 's.id', '=', 'st.sale_id')
+        // Get the total modal for the sales which fulfill the requirement
+        $profit = DB::table('sales as s')
+            ->selectRaw('sum(s.total) as Total')
+            ->where('deleted_at', null)
+            ->where('is_cash', '!=', 0)
+            ->where('method_id', 1)
+            ->where('status', 2)
             ->whereDate('s.transaction_date', '>=', date($request->start_date))
             ->whereDate('s.transaction_date', '<=', date($request->end_date))
             ->get();
 
+        try {
+            //code...
+            if (count($profit_id) > 0) {
+                $modal = DB::table('stocks as st')
+                    ->selectRaw('sum(st.buyPrice) TotalModal')
+                    ->where('deleted_at', null)
+                    ->whereIn('st.sale_id', $profit_id)
+                    ->get();
+            }
+            $data = array(
+                "TotalProfit" => (int)$profit[0]->Total - (int)$modal[0]->TotalModal
+            );
+        } catch (Exception $e) {
+            //throw $th;
+            $data = array(
+                "TotalProfit" => null
+            );
+        }
+        $data[] = date($request->start_date);
+
+
         if ($data) {
             return ApiFormatter::createApi(200, 'Success', $data);
         } else {
-            return ApiFormatter::createApi(400, 'Failed');
+            return ApiFormatter::createApi(200, 'Failed', $data);
         }
     }
 
