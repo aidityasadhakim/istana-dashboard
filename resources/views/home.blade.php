@@ -13,15 +13,44 @@
                         <h3 class="h1">Dashboard</h3>
                         <div class="btn-toolbar mb-2 mb-md-0">
                           <div class="btn-group me-2">
-                            <a href="/?active=thismonth" type="button" class="btn btn-md {{ ($active === "thismonth") ? 'btn-primary text-white' : 'btn-outline-primary text-primary' }}" >Bulan ini</a>
-                            <a href="/?active=lastmonth" type="button" class="btn btn-md {{ ($active === "lastmonth") ? 'btn-primary text-white' : 'btn-outline-primary text-primary' }}">Bulan lalu</a>
-                            <a href="/?active=thisweek" type="button" class="btn btn-md {{ ($active === "thisweek") ? 'btn-primary text-white' : 'btn-outline-primary text-primary' }}">Minggu ini</a>
-                            <a href="/?active=today" type="button" class="btn btn-md {{ ($active === "today") ? 'btn-primary text-white' : 'btn-outline-primary text-primary' }}">Hari ini</a>
+                            <a id="thisMonthBtn" href="/?active=thismonth" type="button" class="btn btn-md {{ ($active === "thismonth") ? 'btn-primary text-white' : 'btn-outline-primary text-primary' }}" >Bulan ini</a>
+                            <a id="lastMonthBtn" href="/?active=lastmonth" type="button" class="btn btn-md {{ ($active === "lastmonth") ? 'btn-primary text-white' : 'btn-outline-primary text-primary' }}">Bulan lalu</a>
+                            <a id="thisWeekBtn" href="/?active=thisweek" type="button" class="btn btn-md {{ ($active === "thisweek") ? 'btn-primary text-white' : 'btn-outline-primary text-primary' }}">Minggu ini</a>
+                            <a id="todayBtn" href="/?active=today" type="button" class="btn btn-md {{ ($active === "today") ? 'btn-primary text-white' : 'btn-outline-primary text-primary' }}">Hari ini</a>
+                            
                           </div>
-                          {{-- <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+
+                          <div class="dropdown text-white">
+                            <a
+                              class="btn btn-md dropdown-toggle {{ ($active === "custom") ? 'btn-primary text-white' : 'btn-outline-primary text-primary' }}"
+                              type="button"
+                              id="customDate"
+                              data-bs-toggle="dropdown"
+                              aria-haspopup="true"
+                              aria-expanded="false"
+                            >Custom
+                          </a>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="customDate">
+                              <form class="px-4 py-3" method="post">
+                                <div class="form-group">
+                                  <label for="start_date">From</label>
+                                  <input type="date" class="form-control" id="start_date" name="start_date" value="<?php echo (isset($start_date)) ? $start_date : date('Y-m-d') ?>" placeholder="">
+                                </div>
+                                <div class="form-group mb-2">
+                                  <label for="end_date">To</label>
+                                  <input type="date" class="form-control" id="end_date" name="end_date" value="<?php echo (isset($start_date)) ? $start_date : date('Y-m-d') ?>" placeholder="">
+                                </div>
+                                <button type="button" name="submit" id="submit" class="btn btn-primary">Submit</button>
+                              </form>
+                            </div>
+
+                          </div>
+{{-- 
+                          <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
                             <span data-feather="calendar" class="align-text-bottom"></span>
                             This week
                           </button> --}}
+
                         </div>
                       </div>
                     </div>
