@@ -8,6 +8,8 @@ $( document ).ready(function() {
   // console.log(totalRevenueChart);
 });
 
+// logJSONData();
+
 
 $(function(){
   function getQueryVariable(variable)
@@ -28,46 +30,27 @@ $(function(){
   let active = getQueryVariable('active');
 
   if (active != "custom") {
-      function functionOne() {
-        return $.ajax({
-          url:`http://127.0.0.1:8000/api/profit/${active}`,
-          method:'get',
-          dataType:'json',
-          success: function(data){
-            console.log(data);
-            $('#profit').text('Rp.'+parseFloat(data.data['TotalProfit']).toLocaleString('id'));
-          }
-        })
-      }
-      
-      function functionTwo() {
-        return $.ajax({
-          url:`http://127.0.0.1:8000/api/cash/${active}`,
-          method:'get',
-          dataType:'json',
-          success: function(data){
-            $('#cash').text('Rp.'+parseFloat(data.data['TotalProfit']).toLocaleString('id'));
-          },
-        }) 
-      }
+    async function functionOne() {
+      const response = await fetch(`http://127.0.0.1:8000/api/profit/${active}`);
+      const data = await response.json();
+      $('#profit').text('Rp.'+parseFloat(data.data['TotalProfit']).toLocaleString('id'));
+    }
     
-      function functionThree() {
-        return $.ajax({
-          url:`http://127.0.0.1:8000/api/cash/${active}`,
-          method:'get',
-          dataType:'json',
-          success: function(data){
-            $('#card').text('Rp.'+parseFloat(data.data['TotalProfit']).toLocaleString('id'));
-          }
-        }) 
-      }
+    async function functionTwo() {
+      const response = await fetch(`http://127.0.0.1:8000/api/cash/${active}`);
+      const data = await response.json();
+      $('#cash').text('Rp.'+parseFloat(data.data['TotalProfit']).toLocaleString('id'));
+    }
+    
+    async function functionThree() {
+      const response = await fetch(`http://127.0.0.1:8000/api/card/${active}`);
+      const data = await response.json();
+      $('#card').text('Rp.'+parseFloat(data.data['TotalProfit']).toLocaleString('id'));
+    }
       
-      Promise.all([
-      functionOne(),
-      functionTwo(),
-      functionThree()
-    ]).then(function() {
-    });
+      functionOne();
+      functionTwo();
+      functionThree();
   } 
 
   $('#submit').click(function(event){
@@ -120,7 +103,7 @@ $(function(){
   
     function functionThree() {
       return $.ajax({
-        url:`http://127.0.0.1:8000/api/cash/custom`,
+        url:`http://127.0.0.1:8000/api/card/custom`,
         method:'post',
         data:{
           start_date: $('#start_date').val(),
@@ -132,6 +115,7 @@ $(function(){
         }
       }) 
     }
+    
     
     Promise.all([
     functionOne(),
