@@ -5,6 +5,8 @@
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
 
+              {{-- Dashboard Header Content --}}
+
               <div class="row">
                 <div class="col-lg-12 mb-2">
                   <div class="card">
@@ -16,11 +18,11 @@
                             <a id="thisMonthBtn" href="/?active=thismonth" type="button" class="btn btn-md {{ ($active === "thismonth") ? 'btn-primary text-white' : 'btn-outline-primary text-primary' }}" >Bulan ini</a>
                             <a id="lastMonthBtn" href="/?active=lastmonth" type="button" class="btn btn-md {{ ($active === "lastmonth") ? 'btn-primary text-white' : 'btn-outline-primary text-primary' }}">Bulan lalu</a>
                             <a id="thisWeekBtn" href="/?active=thisweek" type="button" class="btn btn-md {{ ($active === "thisweek") ? 'btn-primary text-white' : 'btn-outline-primary text-primary' }}">Minggu ini</a>
-                            <a id="todayBtn" href="/?active=today" type="button" class="btn btn-md {{ ($active === "today") ? 'btn-primary text-white' : 'btn-outline-primary text-primary' }}">Hari ini</a>
-                            
+                            <a id="todayBtn" href="/?active=today" type="button" class="btn btn-md {{ ($active === "today") ? 'btn-primary text-white' : 'btn-outline-primary text-primary' }}">Hari ini</a> 
                           </div>
 
                           <div class="dropdown text-white">
+
                             <a
                               class="btn btn-md dropdown-toggle {{ ($active === "custom") ? 'btn-primary text-white' : 'btn-outline-primary text-primary' }}"
                               type="button"
@@ -36,28 +38,26 @@
                                   <label for="start_date">From</label>
                                   <input type="date" class="form-control" id="start_date" name="start_date" value="<?php echo (isset($start_date)) ? $start_date : date('Y-m-d') ?>" placeholder="">
                                 </div>
+
                                 <div class="form-group mb-2">
                                   <label for="end_date">To</label>
                                   <input type="date" class="form-control" id="end_date" name="end_date" value="<?php echo (isset($start_date)) ? $start_date : date('Y-m-d') ?>" placeholder="">
                                 </div>
+
                                 <button type="button" name="submit" id="submit" class="btn btn-primary">Submit</button>
                               </form>
                             </div>
 
                           </div>
-{{-- 
-                          <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                            <span data-feather="calendar" class="align-text-bottom"></span>
-                            This week
-                          </button> --}}
-
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+              {{-- / End of Dashboard Header --}}
 
+              {{-- Transactions Details --}}
               <div class="row">
                 <div class="col-lg-12 col-md-12 order-1">
 
@@ -200,157 +200,76 @@
 
                   </div>
                 </div>
-                <!-- Total Revenue -->
-                <div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4">
-                  <div class="card">
-                    <div class="row row-bordered g-0">
-                      <div class="col-md-8">
-                        <h5 class="card-header m-0 me-2 pb-3">Total Revenue</h5>
-                        <div id="totalRevenueChart" class="px-2"></div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="card-body">
-                          <div class="text-center">
-                            <div class="dropdown">
-                              <button
-                                class="btn btn-sm btn-outline-primary dropdown-toggle"
-                                type="button"
-                                id="growthReportId"
-                                data-bs-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                              >
-                                2022
-                              </button>
-                              <div class="dropdown-menu dropdown-menu-end" aria-labelledby="growthReportId">
-                                <a class="dropdown-item" href="javascript:void(0);">2021</a>
-                                <a class="dropdown-item" href="javascript:void(0);">2020</a>
-                                <a class="dropdown-item" href="javascript:void(0);">2019</a>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div id="growthChart"></div>
-                        <div class="text-center fw-semibold pt-3 mb-2">62% Company Growth</div>
-
-                        <div class="d-flex px-xxl-4 px-lg-2 p-4 gap-xxl-3 gap-lg-1 gap-3 justify-content-between">
-                          <div class="d-flex">
-                            <div class="me-2">
-                              <span class="badge bg-label-primary p-2"><i class="bx bx-dollar text-primary"></i></span>
-                            </div>
-                            <div class="d-flex flex-column">
-                              <small>2022</small>
-                              <h6 class="mb-0">$32.5k</h6>
-                            </div>
-                          </div>
-                          <div class="d-flex">
-                            <div class="me-2">
-                              <span class="badge bg-label-info p-2"><i class="bx bx-wallet text-info"></i></span>
-                            </div>
-                            <div class="d-flex flex-column">
-                              <small>2021</small>
-                              <h6 class="mb-0">$41.2k</h6>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!--/ Total Revenue -->
-                <div class="col-12 col-md-8 col-lg-4 order-3 order-md-2">
-                  <div class="row">
-
-                    <div class="col-6 mb-4">
-                      <div class="card">
-                        <div class="card-body">
-                          <div class="card-title d-flex align-items-start justify-content-between">
-                            <div class="avatar flex-shrink-0">
-                              <img src="../assets/img/icons/unicons/cc-primary.png" alt="Credit Card" class="rounded" />
-                            </div>
-                            <div class="dropdown">
-                              <button
-                                class="btn p-0"
-                                type="button"
-                                id="cardOpt1"
-                                data-bs-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                              >
-                                <i class="bx bx-dots-vertical-rounded"></i>
-                              </button>
-                              <div class="dropdown-menu" aria-labelledby="cardOpt1">
-                                <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                              </div>
-                            </div>
-                          </div>
-                          <span class="fw-semibold d-block mb-1">Transactions</span>
-                          <h3 class="card-title mb-2">$14,857</h3>
-                          <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.14%</small>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div class="col-6 mb-4">
-                      <div class="card">
-                        <div class="card-body">
-                          <div class="card-title d-flex align-items-start justify-content-between">
-                            <div class="avatar flex-shrink-0">
-                              <img src="../assets/img/icons/unicons/cc-primary.png" alt="Credit Card" class="rounded" />
-                            </div>
-                            <div class="dropdown">
-                              <button
-                                class="btn p-0"
-                                type="button"
-                                id="cardOpt1"
-                                data-bs-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                              >
-                                <i class="bx bx-dots-vertical-rounded"></i>
-                              </button>
-                              <div class="dropdown-menu" aria-labelledby="cardOpt1">
-                                <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                              </div>
-                            </div>
-                          </div>
-                          <span class="fw-semibold d-block mb-1">Transactions</span>
-                          <h3 class="card-title mb-2">$14,857</h3>
-                          <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.14%</small>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- </div>
-    <div class="row"> -->
-                    <div class="col-12 mb-4">
-                      <div class="card">
-                        <div class="card-body">
-                          <div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
-                            <div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
-                              <div class="card-title">
-                                <h5 class="text-nowrap mb-2">Profile Report</h5>
-                                <span class="badge bg-label-warning rounded-pill">Year 2021</span>
-                              </div>
-                              <div class="mt-sm-auto">
-                                <small class="text-success text-nowrap fw-semibold"
-                                  ><i class="bx bx-chevron-up"></i> 68.2%</small
-                                >
-                                <h3 class="mb-0">$84,686k</h3>
-                              </div>
-                            </div>
-                            <div id="profileReportChart"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
+              {{-- / End of Transaction Details --}}
+
+              {{-- Statistics --}}
               <div class="row">
+                                
+                <!-- Transactions Overview -->
+                <div class="col-md-6 col-lg-8 order-0 mb-4">
+                  <div class="card h-100">
+                    <div class="card-header">
+                      <ul class="nav nav-pills" role="tablist">
+                        <li class="nav-item">
+                          <button
+                            id="button-transactions"
+                            type="button"
+                            class="nav-link active"
+                            role="tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#navs-tabs-line-card-income"
+                            aria-controls="navs-tabs-line-card-income"
+                            aria-selected="true"
+                          >
+                            Transactions
+                          </button>
+                        </li>
+                        <li class="nav-item">
+                          <button id="button-order" type="button" class="nav-link" role="tab">Order</button>
+                        </li>
+                        <li class="nav-item">
+                          <button id="button-retur" type="button" class="nav-link" role="tab">retur</button>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="card-body px-0">
+                      <div class="tab-content p-0">
+                        <div class="tab-pane fade show active" id="navs-tabs-line-card-income" role="tabpanel">
+                          <div class="d-flex p-4 pt-3">
+                            <div class="avatar flex-shrink-0 me-3">
+                              <img src="../assets/img/icons/unicons/wallet.png" alt="User" />
+                            </div>
+                            <div>
+                              <small class="text-muted d-block">Total Balance</small>
+                              <div class="d-flex align-items-center">
+                                <h6 class="mb-0 me-1">$459.10</h6>
+                                <small class="text-success fw-semibold">
+                                  <i class="bx bx-chevron-up"></i>
+                                  42.9%
+                                </small>
+                              </div>
+                            </div>
+                          </div>
+                          <div id="incomeChart"></div>
+                          <div class="d-flex justify-content-center pt-4 gap-2">
+                            <div class="flex-shrink-0">
+                              <div id="expensesOfWeek"></div>
+                            </div>
+                            <div>
+                              <p class="mb-n1 mt-1">Expenses This Week</p>
+                              <small class="text-muted">$39 less than last week</small>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--/ Transactions Overview -->
+
                 <!-- Order Statistics -->
-                <div class="col-md-6 col-lg-4 col-xl-4 order-0 mb-4">
+                <div class="col-md-6 col-lg-4 col-xl-4 order-1 mb-4">
                   <div class="card h-100">
                     <div class="card-header d-flex align-items-center justify-content-between pb-0">
                       <div class="card-title mb-0">
@@ -449,67 +368,6 @@
                   </div>
                 </div>
                 <!--/ Order Statistics -->
-
-                <!-- Expense Overview -->
-                <div class="col-md-6 col-lg-4 order-1 mb-4">
-                  <div class="card h-100">
-                    <div class="card-header">
-                      <ul class="nav nav-pills" role="tablist">
-                        <li class="nav-item">
-                          <button
-                            type="button"
-                            class="nav-link active"
-                            role="tab"
-                            data-bs-toggle="tab"
-                            data-bs-target="#navs-tabs-line-card-income"
-                            aria-controls="navs-tabs-line-card-income"
-                            aria-selected="true"
-                          >
-                            Income
-                          </button>
-                        </li>
-                        <li class="nav-item">
-                          <button type="button" class="nav-link" role="tab">Expenses</button>
-                        </li>
-                        <li class="nav-item">
-                          <button type="button" class="nav-link" role="tab">Profit</button>
-                        </li>
-                      </ul>
-                    </div>
-                    <div class="card-body px-0">
-                      <div class="tab-content p-0">
-                        <div class="tab-pane fade show active" id="navs-tabs-line-card-income" role="tabpanel">
-                          <div class="d-flex p-4 pt-3">
-                            <div class="avatar flex-shrink-0 me-3">
-                              <img src="../assets/img/icons/unicons/wallet.png" alt="User" />
-                            </div>
-                            <div>
-                              <small class="text-muted d-block">Total Balance</small>
-                              <div class="d-flex align-items-center">
-                                <h6 class="mb-0 me-1">$459.10</h6>
-                                <small class="text-success fw-semibold">
-                                  <i class="bx bx-chevron-up"></i>
-                                  42.9%
-                                </small>
-                              </div>
-                            </div>
-                          </div>
-                          <div id="incomeChart"></div>
-                          <div class="d-flex justify-content-center pt-4 gap-2">
-                            <div class="flex-shrink-0">
-                              <div id="expensesOfWeek"></div>
-                            </div>
-                            <div>
-                              <p class="mb-n1 mt-1">Expenses This Week</p>
-                              <small class="text-muted">$39 less than last week</small>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!--/ Expense Overview -->
 
                 <!-- Transactions -->
                 <div class="col-md-6 col-lg-4 order-2 mb-4">
@@ -632,6 +490,159 @@
                 </div>
                 <!--/ Transactions -->
               </div>
+              {{-- / Statistics --}}
+              
+              {{-- Revenue --}}
+              <div class="row">
+                <!-- Total Revenue -->
+                <div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4">
+                  <div class="card">
+                    <div class="row row-bordered g-0">
+                      <div class="col-md-8">
+                        <h5 class="card-header m-0 me-2 pb-3">Total Revenue</h5>
+                        <div id="totalRevenueChart" class="px-2"></div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="card-body">
+                          <div class="text-center">
+                            <div class="dropdown">
+                              <button
+                                class="btn btn-sm btn-outline-primary dropdown-toggle"
+                                type="button"
+                                id="growthReportId"
+                                data-bs-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                              >
+                                2022
+                              </button>
+                              <div class="dropdown-menu dropdown-menu-end" aria-labelledby="growthReportId">
+                                <a class="dropdown-item" href="javascript:void(0);">2021</a>
+                                <a class="dropdown-item" href="javascript:void(0);">2020</a>
+                                <a class="dropdown-item" href="javascript:void(0);">2019</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div id="growthChart"></div>
+                        <div class="text-center fw-semibold pt-3 mb-2">62% Company Growth</div>
+
+                        <div class="d-flex px-xxl-4 px-lg-2 p-4 gap-xxl-3 gap-lg-1 gap-3 justify-content-between">
+                          <div class="d-flex">
+                            <div class="me-2">
+                              <span class="badge bg-label-primary p-2"><i class="bx bx-dollar text-primary"></i></span>
+                            </div>
+                            <div class="d-flex flex-column">
+                              <small>2022</small>
+                              <h6 class="mb-0">$32.5k</h6>
+                            </div>
+                          </div>
+                          <div class="d-flex">
+                            <div class="me-2">
+                              <span class="badge bg-label-info p-2"><i class="bx bx-wallet text-info"></i></span>
+                            </div>
+                            <div class="d-flex flex-column">
+                              <small>2021</small>
+                              <h6 class="mb-0">$41.2k</h6>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--/ Total Revenue -->
+                <div class="col-12 col-md-8 col-lg-4 order-3 order-md-2">
+                  <div class="row">
+
+                    <div class="col-6 mb-4">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="card-title d-flex align-items-start justify-content-between">
+                            <div class="avatar flex-shrink-0">
+                              <img src="../assets/img/icons/unicons/cc-primary.png" alt="Credit Card" class="rounded" />
+                            </div>
+                            <div class="dropdown">
+                              <button
+                                class="btn p-0"
+                                type="button"
+                                id="cardOpt1"
+                                data-bs-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                              >
+                                <i class="bx bx-dots-vertical-rounded"></i>
+                              </button>
+                              <div class="dropdown-menu" aria-labelledby="cardOpt1">
+                                <a class="dropdown-item" href="javascript:void(0);">View More</a>
+                                <a class="dropdown-item" href="javascript:void(0);">Delete</a>
+                              </div>
+                            </div>
+                          </div>
+                          <span class="fw-semibold d-block mb-1">Transactions</span>
+                          <h3 class="card-title mb-2">$14,857</h3>
+                          <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.14%</small>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="col-6 mb-4">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="card-title d-flex align-items-start justify-content-between">
+                            <div class="avatar flex-shrink-0">
+                              <img src="../assets/img/icons/unicons/cc-primary.png" alt="Credit Card" class="rounded" />
+                            </div>
+                            <div class="dropdown">
+                              <button
+                                class="btn p-0"
+                                type="button"
+                                id="cardOpt1"
+                                data-bs-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                              >
+                                <i class="bx bx-dots-vertical-rounded"></i>
+                              </button>
+                              <div class="dropdown-menu" aria-labelledby="cardOpt1">
+                                <a class="dropdown-item" href="javascript:void(0);">View More</a>
+                                <a class="dropdown-item" href="javascript:void(0);">Delete</a>
+                              </div>
+                            </div>
+                          </div>
+                          <span class="fw-semibold d-block mb-1">Transactions</span>
+                          <h3 class="card-title mb-2">$14,857</h3>
+                          <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.14%</small>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="col-12 mb-4">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
+                            <div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
+                              <div class="card-title">
+                                <h5 class="text-nowrap mb-2">Profile Report</h5>
+                                <span class="badge bg-label-warning rounded-pill">Year 2021</span>
+                              </div>
+                              <div class="mt-sm-auto">
+                                <small class="text-success text-nowrap fw-semibold"
+                                  ><i class="bx bx-chevron-up"></i> 68.2%</small
+                                >
+                                <h3 class="mb-0">$84,686k</h3>
+                              </div>
+                            </div>
+                            <div id="profileReportChart"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {{-- / Revenue --}}
+
             </div>
             <!-- / Content -->
 
@@ -674,13 +685,15 @@
     {{-- Jquery --}}
     {{-- <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script> --}}
     {{-- <script src="libs/jquery/jquery.js"></script> --}}
-    
-    @extends('layouts.footer')
+
     @section('additionaljs')
-
     <!-- Page JS -->
-    <script src="js/dashboards-analytics.js"></script>
+    <script src="js/dashboards/analytics-chart.js"></script>
+    <script src="js/dashboards/transactions-chart.js"></script>
+    <script src="js/dashboards/order-chart.js"></script>
 
-    {{-- Feather Icon --}}
+    
+    Feather Icon
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
     @endsection
+    
