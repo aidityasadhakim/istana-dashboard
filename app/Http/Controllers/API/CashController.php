@@ -259,7 +259,6 @@ class CashController extends Controller
             );
         }
 
-
         if ($data) {
             return ApiFormatter::createApi(200, 'Success', $data);
         } else {

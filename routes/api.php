@@ -1,11 +1,13 @@
 <?php
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\CardController;
 use App\Http\Controllers\API\CashController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\ProfitController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\SalesTransactionController;
+use App\Http\Controllers\API\ServicesTransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +55,24 @@ Route::controller(OrderController::class)->group(function () {
     Route::get("order/thisweek", "orderThisWeek");
     Route::post("order/custom", "orderBetweenDate");
     Route::get("order/test", "orderTest");
+});
+
+Route::controller(SalesTransactionController::class)->group(function () {
+    Route::get("salestransaction/today", "salesTransactionToday");
+    Route::get("salestransaction/thismonth", "salesTransactionThisMonth");
+    Route::get("salestransaction/lastmonth", "salesTransactionLastMonth");
+    Route::get("salestransaction/thisweek", "salesTransactionThisWeek");
+    Route::post("salestransaction/custom", "salesTransactionBetweenDate");
+    Route::get("salestransaction/test", "salesTransactionTest");
+});
+
+Route::controller(ServicesTransactionController::class)->group(function () {
+    Route::get("servicestransaction/today", "servicesTransactionToday");
+    Route::get("servicestransaction/thismonth", "servicesTransactionThisMonth");
+    Route::get("servicestransaction/lastmonth", "servicesTransactionLastMonth");
+    Route::get("servicestransaction/thisweek", "servicesTransactionThisWeek");
+    Route::post("servicestransaction/custom", "servicesTransactionBetweenDate");
+    Route::get("servicestransaction/test", "servicesTransactionTest");
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
