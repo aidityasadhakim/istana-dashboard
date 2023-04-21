@@ -31,6 +31,65 @@ Route::controller(ProfitController::class)->group(function () {
     Route::get("profit/test", 'profitTest');
 });
 
+/*
+    GET /profit/show/{id}
+    POST /profit/custom
+    GET /profit/today
+    GET /profit/thismonth
+    GET /profit/lastmonth
+    GET /profit/thisweek
+    GET /profit/test
+
+    GET /cash/show/{id}
+    POST /cash/custom
+    GET /cash/today
+    GET /cash/thismonth
+    GET /cash/lastmonth
+    GET /cash/thisweek
+    GET /cash/test
+
+    GET /card/show/{id}
+    POST /card/custom
+    GET /card/today
+    GET /card/thismonth
+    GET /card/lastmonth
+    GET /card/thisweek
+    GET /card/test
+
+    GET /order/show/{id}
+    POST /order/custom
+    GET /order/today
+    GET /order/thismonth
+    GET /order/lastmonth
+    GET /order/thisweek
+    GET /order/test
+
+    GET /salestransaction/show/{id}
+    POST /salestransaction/custom
+    GET /salestransaction/today
+    GET /salestransaction/thismonth
+    GET /salestransaction/lastmonth
+    GET /salestransaction/thisweek
+    GET /salestransaction/test
+
+    GET /servicestransaction/show/{id}
+    POST /servicestransaction/custom
+    GET /servicestransaction/today
+    GET /servicestransaction/thismonth
+    GET /servicestransaction/lastmonth
+    GET /servicestransaction/thisweek
+    GET /servicestransaction/test
+
+    GET /itemtype/show/{id}
+    POST /itemtype/custom
+    GET /itemtype/today
+    GET /itemtype/thismonth
+    GET /itemtype/lastmonth
+    GET /itemtype/thisweek
+    GET /itemtype/test
+
+*/
+
 Route::controller(CashController::class)->group(function () {
     Route::get("cash/today", "cashToday");
     Route::get("cash/thismonth", "cashThisMonth");

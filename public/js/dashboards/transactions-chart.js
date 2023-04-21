@@ -308,7 +308,7 @@ $(document).ready(function () {
                     padding: {
                         top: 0,
                         bottom: 0,
-                        right: 30,
+                        right: 0,
                     },
                 },
                 plotOptions: {

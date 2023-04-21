@@ -91,7 +91,7 @@
                             </div>
                           </div>
                           <span class="fw-semibold d-block mb-1">Total Transaction</span>
-                          <h3 class="card-title mb-1" id="profit"></h3>
+                          <h3 class="card-title mb-1 text-wrap" id="profit"></h3>
                           {{-- <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small> --}}
                         </div>
                       </div>
@@ -126,7 +126,7 @@
                             </div>
                           </div>
                           <span class="fw-semibold d-block mb-1">Tunai</span>
-                          <h3 class="card-title text-nowrap mb-1" id="cash"></h3>
+                          <h3 class="card-title text-wrap mb-1" id="cash"></h3>
                           {{-- <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.42%</small> --}}
                         </div>
                       </div>
@@ -157,7 +157,7 @@
                             </div>
                           </div>
                           <span class="d-block fw-semibold mb-1">Debit/Credit</span>
-                          <h3 class="card-title text-nowrap mb-1" id="card"></h3>
+                          <h3 class="card-title mb-1" id="card"></h3>
                           {{-- <small class="text-danger fw-semibold"><i class="bx bx-down-arrow-alt"></i> -14.82%</small> --}}
                         </div>
                       </div>
@@ -229,9 +229,9 @@
                         <li class="nav-item">
                           <button id="button-order" type="button" class="nav-link" role="tab">Transactions</button>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                           <button id="button-retur" type="button" class="nav-link" role="tab">retur</button>
-                        </li>
+                        </li> --}}
                       </ul>
                     </div>
                     <div class="card-body px-0">
@@ -376,6 +376,7 @@
                 <!--/ Item Statistics -->
 
                 <!-- Transactions -->
+{{--                 
                 <div class="col-md-6 col-lg-4 order-2 mb-4">
                   <div class="card h-100">
                     <div class="card-header d-flex align-items-center justify-content-between">
@@ -495,11 +496,11 @@
                   </div>
                 </div>
                 <!--/ Transactions -->
-              </div>
+              </div> --}}
               {{-- / Statistics --}}
               
               {{-- Revenue --}}
-              <div class="row">
+              {{-- <div class="row">
                 <!-- Total Revenue -->
                 <div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4">
                   <div class="card">
@@ -581,7 +582,7 @@
                               </button>
                               <div class="dropdown-menu" aria-labelledby="cardOpt1">
                                 <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                {{-- <a class="dropdown-item" href="javascript:void(0);">Delete</a> --}}
+                                <!-- <a class="dropdown-item" href="javascript:void(0);">Delete</a> -->
                               </div>
                             </div>
                           </div>
@@ -612,7 +613,7 @@
                               </button>
                               <div class="dropdown-menu" aria-labelledby="cardOpt1">
                                 <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                {{-- <a class="dropdown-item" href="javascript:void(0);">Delete</a> --}}
+                                <!-- <a class="dropdown-item" href="javascript:void(0);">Delete</a> -->
                               </div>
                             </div>
                           </div>
@@ -646,7 +647,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> --}}
               {{-- / Revenue --}}
 
             </div>
@@ -663,7 +664,7 @@
                   , made with ❤️ by
                   <a href="https://instagram.com/aidityas_adhakim" target="_blank" class="footer-link fw-bolder">Aidityas Adhakim</a>
                 </div>
-                <div>
+                {{-- <div>
                   <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
                   <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
 
@@ -680,7 +681,7 @@
                     class="footer-link me-4"
                     >Support</a
                   >
-                </div>
+                </div> --}}
               </div>
             </footer>
             <!-- / Footer -->
@@ -699,7 +700,7 @@
     <script src="js/dashboards/transactions-chart.js"></script>
 
     
-    Feather Icon
+    {{-- Feather Icon --}}
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
     @endsection
     
