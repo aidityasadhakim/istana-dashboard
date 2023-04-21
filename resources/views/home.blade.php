@@ -86,7 +86,7 @@
                               </button>
                               <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
                                 <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                <a class="dropdown-item" href="javascript:void(0);">Delete</a>
+                                {{-- <a class="dropdown-item" href="javascript:void(0);">Delete</a> --}}
                               </div>
                             </div>
                           </div>
@@ -121,7 +121,7 @@
                               </button>
                               <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt6">
                                 <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                <a class="dropdown-item" href="javascript:void(0);">Delete</a>
+                                {{-- <a class="dropdown-item" href="javascript:void(0);">Delete</a> --}}
                               </div>
                             </div>
                           </div>
@@ -152,7 +152,7 @@
                               </button>
                               <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt4">
                                 <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                <a class="dropdown-item" href="javascript:void(0);">Delete</a>
+                                {{-- <a class="dropdown-item" href="javascript:void(0);">Delete</a> --}}
                               </div>
                             </div>
                           </div>
@@ -187,12 +187,13 @@
                               </button>
                               <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
                                 <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                <a class="dropdown-item" href="javascript:void(0);">Delete</a>
+                                {{-- <a class="dropdown-item" href="javascript:void(0);">Delete</a> --}}
                               </div>
                             </div>
                           </div>
-                          <span class="fw-semibold d-block mb-1">Total Order</span>
-                          <h3 class="card-title mb-1" id="order"></h3>
+                          <span class="fw-semibold d-block mb-1">Total Orders
+                          </span>
+                          <h3 class="card-title mb-1 total-orders"></h3>
                           {{-- <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small> --}}
                         </div>
                       </div>
@@ -222,11 +223,11 @@
                             aria-controls="navs-tabs-line-card-income"
                             aria-selected="true"
                           >
-                            Transactions
+                            Order
                           </button>
                         </li>
                         <li class="nav-item">
-                          <button id="button-order" type="button" class="nav-link" role="tab">Order</button>
+                          <button id="button-order" type="button" class="nav-link" role="tab">Transactions</button>
                         </li>
                         <li class="nav-item">
                           <button id="button-retur" type="button" class="nav-link" role="tab">retur</button>
@@ -241,24 +242,29 @@
                               <img src="../assets/img/icons/unicons/wallet.png" alt="User" />
                             </div>
                             <div>
-                              <small class="text-muted d-block">Total Balance</small>
+                              <small class="text-muted d-block">Total</small>
                               <div class="d-flex align-items-center">
-                                <h6 class="mb-0 me-1">$459.10</h6>
-                                <small class="text-success fw-semibold">
+                                <h6 class="mb-0 me-1" id="total-transactions"></h6>
+                                {{-- <small class="text-success fw-semibold">
                                   <i class="bx bx-chevron-up"></i>
                                   42.9%
-                                </small>
+                                </small> --}}
                               </div>
                             </div>
                           </div>
                           <div id="incomeChart"></div>
-                          <div class="d-flex justify-content-center pt-4 gap-2">
+                          <div class="d-flex justify-content-center pt-4 gap-1">
                             <div class="flex-shrink-0">
                               <div id="expensesOfWeek"></div>
                             </div>
-                            <div>
-                              <p class="mb-n1 mt-1">Expenses This Week</p>
-                              <small class="text-muted">$39 less than last week</small>
+                            <div class="align-items-center">
+                              <p class="mb-n1 mt-1">Comparison</p>
+                              <small id="sales-total" class="text-primary fw-semibold">
+                                </small>
+                                <br>
+                                <small id="services-total" class="text-success fw-semibold">
+                                </small>
+                              {{-- <small class="text-muted">$39 less than last week</small> --}}
                             </div>
                           </div>
                         </div>
@@ -268,13 +274,13 @@
                 </div>
                 <!--/ Transactions Overview -->
 
-                <!-- Order Statistics -->
+                <!-- Item Statistics -->
                 <div class="col-md-6 col-lg-4 col-xl-4 order-1 mb-4">
                   <div class="card h-100">
                     <div class="card-header d-flex align-items-center justify-content-between pb-0">
                       <div class="card-title mb-0">
-                        <h5 class="m-0 me-2">Order Statistics</h5>
-                        <small class="text-muted">42.82k Total Sales</small>
+                        <h5 class="m-0 me-2">Item Statistics</h5>
+                        {{-- <small class="text-muted">42.82k Total Sales</small> --}}
                       </div>
                       <div class="dropdown">
                         <button
@@ -297,8 +303,8 @@
                     <div class="card-body">
                       <div class="d-flex justify-content-between align-items-center mb-3">
                         <div class="d-flex flex-column align-items-center gap-1">
-                          <h2 class="mb-2">8,258</h2>
-                          <span>Total Orders</span>
+                          <h2 class="mb-2" id="total-items"></h2>
+                          <span>Total Item Sold</span>
                         </div>
                         <div id="orderStatisticsChart"></div>
                       </div>
@@ -311,11 +317,11 @@
                           </div>
                           <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                             <div class="me-2">
-                              <h6 class="mb-0">Electronic</h6>
-                              <small class="text-muted">Mobile, Earbuds, TV</small>
+                              <h6 class="mb-0">Accessories</h6>
+                              <small class="text-muted">Tempered Glass, Backdoor, etc</small>
                             </div>
                             <div class="user-progress">
-                              <small class="fw-semibold">82.5k</small>
+                              <small class="fw-semibold" id="total-accessories"></small>
                             </div>
                           </div>
                         </li>
@@ -325,11 +331,11 @@
                           </div>
                           <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                             <div class="me-2">
-                              <h6 class="mb-0">Fashion</h6>
-                              <small class="text-muted">T-shirt, Jeans, Shoes</small>
+                              <h6 class="mb-0">Part</h6>
+                              <small class="text-muted">LCD, Flexible, etc</small>
                             </div>
                             <div class="user-progress">
-                              <small class="fw-semibold">23.8k</small>
+                              <small class="fw-semibold" id="total-part"></small>
                             </div>
                           </div>
                         </li>
@@ -339,11 +345,11 @@
                           </div>
                           <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                             <div class="me-2">
-                              <h6 class="mb-0">Decor</h6>
-                              <small class="text-muted">Fine Art, Dining</small>
+                              <h6 class="mb-0">Unit</h6>
+                              <small class="text-muted">Solder, Tiner, etc</small>
                             </div>
                             <div class="user-progress">
-                              <small class="fw-semibold">849k</small>
+                              <small class="fw-semibold" id="total-unit"></small>
                             </div>
                           </div>
                         </li>
@@ -355,11 +361,11 @@
                           </div>
                           <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                             <div class="me-2">
-                              <h6 class="mb-0">Sports</h6>
-                              <small class="text-muted">Football, Cricket Kit</small>
+                              <h6 class="mb-0">Tools</h6>
+                              <small class="text-muted">Power Supply, Microscope, etc</small>
                             </div>
                             <div class="user-progress">
-                              <small class="fw-semibold">99</small>
+                              <small class="fw-semibold" id="total-tools"></small>
                             </div>
                           </div>
                         </li>
@@ -367,7 +373,7 @@
                     </div>
                   </div>
                 </div>
-                <!--/ Order Statistics -->
+                <!--/ Item Statistics -->
 
                 <!-- Transactions -->
                 <div class="col-md-6 col-lg-4 order-2 mb-4">
@@ -575,7 +581,7 @@
                               </button>
                               <div class="dropdown-menu" aria-labelledby="cardOpt1">
                                 <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                <a class="dropdown-item" href="javascript:void(0);">Delete</a>
+                                {{-- <a class="dropdown-item" href="javascript:void(0);">Delete</a> --}}
                               </div>
                             </div>
                           </div>
@@ -606,7 +612,7 @@
                               </button>
                               <div class="dropdown-menu" aria-labelledby="cardOpt1">
                                 <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                <a class="dropdown-item" href="javascript:void(0);">Delete</a>
+                                {{-- <a class="dropdown-item" href="javascript:void(0);">Delete</a> --}}
                               </div>
                             </div>
                           </div>
@@ -655,7 +661,7 @@
                     document.write(new Date().getFullYear());
                   </script>
                   , made with ❤️ by
-                  <a href="https://themeselection.com" target="_blank" class="footer-link fw-bolder">ThemeSelection</a>
+                  <a href="https://instagram.com/aidityas_adhakim" target="_blank" class="footer-link fw-bolder">Aidityas Adhakim</a>
                 </div>
                 <div>
                   <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
@@ -689,8 +695,8 @@
     @section('additionaljs')
     <!-- Page JS -->
     <script src="js/dashboards/analytics-chart.js"></script>
-    <script src="js/dashboards/transactions-chart.js"></script>
     <script src="js/dashboards/order-chart.js"></script>
+    <script src="js/dashboards/transactions-chart.js"></script>
 
     
     Feather Icon

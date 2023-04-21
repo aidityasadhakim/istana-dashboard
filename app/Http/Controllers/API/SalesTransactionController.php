@@ -102,8 +102,8 @@ class SalesTransactionController extends Controller
 
     public function salesTransactionThisMonth()
     {
-        $details = Sales::selectRaw("IFNULL(COUNT(id),0)totalTransaction,
-        IFNULL(SUM(total),0) total,
+        $details = Sales::selectRaw("COUNT(id) totalTransaction,
+        SUM(total) total,
         CONCAT(MONTH(DATE(transaction_date)),'-',DAY(DATE(transaction_date))) AS date")
             ->where('type', 'sale')
             ->where('deleted_at', null)

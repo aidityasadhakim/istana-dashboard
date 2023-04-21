@@ -24,7 +24,7 @@ $(document).ready(function () {
 
     async function test(active = "thismonth") {
         const response = await fetch(
-            `http://127.0.0.1:8000/api/salestransaction/${active}`
+            config.baseurl + `/api/salestransaction/${active}`
         );
         const data = await response.json();
     }
@@ -42,12 +42,12 @@ $(document).ready(function () {
 
             if (active != "custom" && !custom) {
                 const response = await fetch(
-                    `http://127.0.0.1:8000/api/salestransaction/${active}`
+                    config.baseurl + `/api/salestransaction/${active}`
                 );
                 const data = await response.json();
 
                 const response2 = await fetch(
-                    `http://127.0.0.1:8000/api/servicestransaction/${active}`
+                    config.baseurl + `/api/servicestransaction/${active}`
                 );
                 const data2 = await response2.json();
 
@@ -62,7 +62,7 @@ $(document).ready(function () {
                 }
             } else {
                 const response = await fetch(
-                    `http://127.0.0.1:8000/api/salestransaction/custom`,
+                    config.baseurl + `/api/salestransaction/custom`,
                     {
                         method: "POST",
                         body: JSON.stringify({
@@ -74,7 +74,7 @@ $(document).ready(function () {
                 const data = await response.json();
 
                 const response2 = await fetch(
-                    `http://127.0.0.1:8000/api/servicestransaction/custom`,
+                    config.baseurl + `/api/servicestransaction/custom`,
                     {
                         method: "POST",
                         body: JSON.stringify({
@@ -84,9 +84,6 @@ $(document).ready(function () {
                     }
                 );
                 const data2 = await response2.json();
-
-                console.log(start_date, end_date);
-                console.log(data);
 
                 if (type == "transactions") {
                     series1 = data.data.totalTransaction;
@@ -100,6 +97,29 @@ $(document).ready(function () {
                     incomeChart();
                 }
             }
+
+            if (typeof series1 != Number) {
+                series1 = series1.map((series1) => Number(series1));
+                series2 = series2.map((series2) => Number(series2));
+            }
+
+            const sumOfSeries1 = series1.reduce((a, b) => a + b, 0);
+
+            const sumOfSeries2 = series2.reduce((a, b) => a + b, 0);
+
+            const sumOfS1S2 = sumOfSeries1 + sumOfSeries2;
+
+            $("#sales-total")
+                .html("Sales: ")
+                .append(sumOfSeries1.toLocaleString("id"));
+            $("#services-total")
+                .html("Services: ")
+                .append(sumOfSeries2.toLocaleString("id"));
+
+            $("#total-transactions").text(
+                parseFloat(sumOfS1S2).toLocaleString("id")
+            );
+
             incomeChart(active, series1, series2, customCat);
         }
         totalTransactions();
@@ -111,11 +131,14 @@ $(document).ready(function () {
         series2 = [],
         customCat = ""
     ) {
-        console.log(active, series1, series2, customCat);
-
         const todayDate = getTodayDate();
-        const firstDateThisMonth = getFirstDateThisMonth();
         const lastDateThisMonth = getLastDateThisMonth();
+
+        const sumOfSeries1 = series1.reduce((a, b) => a + b, 0);
+
+        const sumOfSeries2 = series2.reduce((a, b) => a + b, 0);
+
+        console.log("hello");
 
         let masterLabels = {
             today: [todayDate],
@@ -169,7 +192,7 @@ $(document).ready(function () {
                     type: "area",
                 },
                 dataLabels: {
-                    enabled: true,
+                    enabled: false,
                 },
                 stroke: {
                     width: 3,
@@ -255,82 +278,142 @@ $(document).ready(function () {
             );
             incomeChart.render();
         }
-    }
 
-    // Expenses Mini Chart - Radial Chart
-    // --------------------------------------------------------------------
-    const weeklyExpensesEl = document.querySelector("#expensesOfWeek"),
-        weeklyExpensesConfig = {
-            series: [65],
-            chart: {
-                width: 60,
-                height: 60,
-                type: "radialBar",
-            },
-            plotOptions: {
-                radialBar: {
-                    startAngle: 0,
-                    endAngle: 360,
-                    strokeWidth: "8",
-                    hollow: {
-                        margin: 2,
-                        size: "45%",
+        // Expenses Mini Chart - Radial Chart
+        // --------------------------------------------------------------------
+        const weeklyExpensesEl = document.querySelector("#expensesOfWeek"),
+            weeklyExpensesConfig = {
+                chart: {
+                    height: 100,
+                    width: 100,
+                    type: "donut",
+                },
+                labels: ["Sales", "Services"],
+                series: [sumOfSeries1, sumOfSeries2],
+                colors: [config.colors.primary, config.colors.success],
+                stroke: {
+                    width: 5,
+                    colors: cardColor,
+                },
+                dataLabels: {
+                    enabled: false,
+                    formatter: function (val, opt) {
+                        return parseInt(val) + "%";
                     },
-                    track: {
-                        strokeWidth: "50%",
-                        background: borderColor,
+                },
+                legend: {
+                    show: false,
+                },
+                grid: {
+                    padding: {
+                        top: 0,
+                        bottom: 0,
+                        right: 30,
                     },
-                    dataLabels: {
-                        show: true,
-                        name: {
-                            show: false,
-                        },
-                        value: {
-                            formatter: function (val) {
-                                return "$" + parseInt(val);
+                },
+                plotOptions: {
+                    pie: {
+                        donut: {
+                            size: "30%",
+                            labels: {
+                                show: false,
+                                value: {
+                                    fontSize: "0.7rem",
+                                    fontFamily: "Public Sans",
+                                    color: headingColor,
+                                    offsetY: -15,
+                                },
+                                name: {
+                                    offsetY: 20,
+                                    fontFamily: "Public Sans",
+                                },
+                                total: {
+                                    show: true,
+                                    fontSize: "0.7rem",
+                                    color: axisColor,
+                                    label: masterLabels[active],
+                                },
                             },
-                            offsetY: 5,
-                            color: "#697a8d",
-                            fontSize: "13px",
-                            show: true,
                         },
                     },
                 },
-            },
-            fill: {
-                type: "solid",
-                colors: config.colors.primary,
-            },
-            stroke: {
-                lineCap: "round",
-            },
-            grid: {
-                padding: {
-                    top: -10,
-                    bottom: -15,
-                    left: -10,
-                    right: -10,
-                },
-            },
-            states: {
-                hover: {
-                    filter: {
-                        type: "none",
-                    },
-                },
-                active: {
-                    filter: {
-                        type: "none",
-                    },
-                },
-            },
-        };
-    if (typeof weeklyExpensesEl !== undefined && weeklyExpensesEl !== null) {
-        const weeklyExpenses = new ApexCharts(
-            weeklyExpensesEl,
-            weeklyExpensesConfig
-        );
-        weeklyExpenses.render();
+                // series: [65],
+                // chart: {
+                //     width: 60,
+                //     height: 60,
+                //     type: "radialBar",
+                // },
+                // plotOptions: {
+                //     radialBar: {
+                //         startAngle: 0,
+                //         endAngle: 360,
+                //         strokeWidth: "8",
+                //         hollow: {
+                //             margin: 2,
+                //             size: "45%",
+                //         },
+                //         track: {
+                //             strokeWidth: "50%",
+                //             background: borderColor,
+                //         },
+                //         dataLabels: {
+                //             show: true,
+                //             name: {
+                //                 show: false,
+                //             },
+                //             value: {
+                //                 formatter: function (val) {
+                //                     return "$" + parseInt(val);
+                //                 },
+                //                 offsetY: 5,
+                //                 color: "#697a8d",
+                //                 fontSize: "13px",
+                //                 show: true,
+                //             },
+                //         },
+                //     },
+                // },
+                // fill: {
+                //     type: "solid",
+                //     colors: config.colors.primary,
+                // },
+                // stroke: {
+                //     lineCap: "round",
+                // },
+                // grid: {
+                //     padding: {
+                //         top: -10,
+                //         bottom: -15,
+                //         left: -10,
+                //         right: -10,
+                //     },
+                // },
+                // states: {
+                //     hover: {
+                //         filter: {
+                //             type: "none",
+                //         },
+                //     },
+                //     active: {
+                //         filter: {
+                //             type: "none",
+                //         },
+                //     },
+                // },
+            };
+        while (weeklyExpensesEl.firstChild) {
+            weeklyExpensesEl.removeChild(weeklyExpensesEl.lastChild);
+        }
+        if (
+            typeof weeklyExpensesEl !== undefined &&
+            weeklyExpensesEl !== null
+        ) {
+            const weeklyExpenses = new ApexCharts(
+                weeklyExpensesEl,
+                weeklyExpensesConfig
+            );
+            weeklyExpenses.render();
+        }
     }
 
     chartTrigger("transactions");
@@ -340,7 +423,16 @@ $(document).ready(function () {
 
         $("#button-transactions").addClass("active");
 
-        chartTrigger("transactions");
+        if (active == "custom") {
+            chartTrigger(
+                "transactions",
+                $("#start_date").val(),
+                $("#end_date").val(),
+                true
+            );
+        } else {
+            chartTrigger("transactions");
+        }
     });
 
     $("#button-order").on("click", function () {
