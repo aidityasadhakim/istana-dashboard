@@ -3,14 +3,11 @@
  */
 
 // 'use strict';
-$(document).ready(function () {
-    const totalRevenueChart = document.getElementById("totalRevenueChart");
-    // console.log(totalRevenueChart);
-});
-
-// logJSONData();
 
 $(function () {
+    const loader =
+        '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>';
+
     function getQueryVariable(variable) {
         var query = window.location.search.substring(1);
         var vars = query.split("&");
@@ -27,8 +24,9 @@ $(function () {
 
     if (active != "custom") {
         async function totalTransactions() {
+            $("#profit").html(loader);
             const response = await fetch(
-                `http://127.0.0.1:8000/api/profit/${active}`
+                config.baseurl + `/api/profit/${active}`
             );
             const data = await response.json();
             $("#profit").text(
@@ -38,8 +36,9 @@ $(function () {
         }
 
         async function cashTransactions() {
+            $("#cash").html(loader);
             const response = await fetch(
-                `http://127.0.0.1:8000/api/cash/${active}`
+                config.baseurl + `/api/cash/${active}`
             );
             const data = await response.json();
             $("#cash").text(
@@ -49,8 +48,9 @@ $(function () {
         }
 
         async function cardTransactions() {
+            $("#card").html(loader);
             const response = await fetch(
-                `http://127.0.0.1:8000/api/card/${active}`
+                config.baseurl + `/api/card/${active}`
             );
             const data = await response.json();
             $("#card").text(
@@ -60,13 +60,16 @@ $(function () {
         }
 
         async function totalOrders() {
+            $(".total-orders").html(loader);
             const response = await fetch(
-                `http://127.0.0.1:8000/api/order/${active}`
+                config.baseurl + `/api/order/${active}`
             );
             const data = await response.json();
-            $("#order").text(
-                parseFloat(data.data["TotalOrder"]).toLocaleString("id")
-            );
+            $(".total-orders").each(function () {
+                $(this).text(
+                    parseFloat(data.data["TotalOrder"]).toLocaleString("id")
+                );
+            });
         }
 
         totalTransactions();
@@ -76,9 +79,10 @@ $(function () {
     }
 
     $("#submit").click(function (event) {
-        $("#profit").text("Loading");
-        $("#cash").text("Loading");
-        $("#card").text("Loading");
+        $("#profit").html(loader);
+        $("#cash").html(loader);
+        $("#card").html(loader);
+        $(".total-orders").html(loader);
 
         $("#thisMonthBtn").removeClass("btn-primary text-white");
         $("#lastMonthBtn").removeClass("btn-primary text-white");
@@ -94,7 +98,7 @@ $(function () {
 
         function totalTransactions() {
             return $.ajax({
-                url: `http://127.0.0.1:8000/api/profit/custom`,
+                url: config.baseurl + `/api/profit/custom`,
                 method: "post",
                 data: {
                     start_date: $("#start_date").val(),
@@ -114,7 +118,7 @@ $(function () {
 
         function cashTransactions() {
             return $.ajax({
-                url: `http://127.0.0.1:8000/api/cash/custom`,
+                url: config.baseurl + `/api/cash/custom`,
                 method: "post",
                 data: {
                     start_date: $("#start_date").val(),
@@ -134,7 +138,7 @@ $(function () {
 
         function cardTransactions() {
             return $.ajax({
-                url: `http://127.0.0.1:8000/api/card/custom`,
+                url: config.baseurl + `/api/card/custom`,
                 method: "post",
                 data: {
                     start_date: $("#start_date").val(),
@@ -154,7 +158,7 @@ $(function () {
 
         function totalOrders() {
             return $.ajax({
-                url: `http://127.0.0.1:8000/api/order/custom`,
+                url: config.baseurl + `/api/order/custom`,
                 method: "post",
                 data: {
                     start_date: $("#start_date").val(),
@@ -162,12 +166,13 @@ $(function () {
                 },
                 dataType: "json",
                 success: function (data) {
-                    $("#order").text(
-                        "Rp." +
+                    $(".total-orders").each(function () {
+                        $(this).text(
                             parseFloat(data.data["TotalOrder"]).toLocaleString(
                                 "id"
                             )
-                    );
+                        );
+                    });
                 },
             });
         }

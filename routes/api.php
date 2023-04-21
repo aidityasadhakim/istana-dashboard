@@ -6,6 +6,7 @@ use App\Http\Controllers\API\CardController;
 use App\Http\Controllers\API\CashController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\ProfitController;
+use App\Http\Controllers\API\ItemTypeController;
 use App\Http\Controllers\API\SalesTransactionController;
 use App\Http\Controllers\API\ServicesTransactionController;
 
@@ -73,6 +74,15 @@ Route::controller(ServicesTransactionController::class)->group(function () {
     Route::get("servicestransaction/thisweek", "servicesTransactionThisWeek");
     Route::post("servicestransaction/custom", "servicesTransactionBetweenDate");
     Route::get("servicestransaction/test", "servicesTransactionTest");
+});
+
+Route::controller(ItemTypeController::class)->group(function () {
+    Route::get("itemtype/today", "itemTypeToday");
+    Route::get("itemtype/thismonth", "itemTypeThisMonth");
+    Route::get("itemtype/lastmonth", "itemTypeLastMonth");
+    Route::get("itemtype/thisweek", "itemTypeThisWeek");
+    Route::post("itemtype/custom", "itemTypeBetweenDate");
+    Route::get("itemtype/test", "itemTypeTest");
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
